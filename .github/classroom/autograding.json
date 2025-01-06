@@ -1,0 +1,134 @@
+{
+  "tests": [
+    {
+      "name": "test_load_fred.py::test_pull_all",
+      "setup": "",
+      "run": "pytest ./src/test_load_fred.py::test_pull_all",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "test_load_fred.py::test_pull_all_date_range",
+      "setup": "",
+      "run": "pytest ./src/test_load_fred.py::test_pull_all_date_range",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "test_load_fred.py::test_series_descriptions",
+      "setup": "",
+      "run": "pytest ./src/test_load_fred.py::test_series_descriptions",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "test_load_fred.py::test_numbers",
+      "setup": "",
+      "run": "pytest ./src/test_load_fred.py::test_numbers",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "test_load_cps.py::test_df_raw_columns",
+      "setup": "",
+      "run": "pytest ./src/test_load_cps.py::test_df_raw_columns",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "test_load_cps.py::test_df_missing_values",
+      "setup": "",
+      "run": "pytest ./src/test_load_cps.py::test_df_missing_values",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "test_wage_growth_analytics.py::test_s04",
+      "setup": "",
+      "run": "pytest ./src/test_wage_growth_analytics.py::test_s04",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "test_wage_growth_analytics.py::test_s05",
+      "setup": "",
+      "run": "pytest ./src/test_wage_growth_analytics.py::test_s05",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "test_wage_growth_analytics.py::test_s06",
+      "setup": "",
+      "run": "pytest ./src/test_wage_growth_analytics.py::test_s06",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "test_wage_growth_analytics.py::test_s10",
+      "setup": "",
+      "run": "pytest ./src/test_wage_growth_analytics.py::test_s10",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "test_wage_growth_analytics.py::test_s12",
+      "setup": "",
+      "run": "pytest ./src/test_wage_growth_analytics.py::test_s12",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "test_wage_growth_analytics.py::test_s20",
+      "setup": "",
+      "run": "pytest ./src/test_wage_growth_analytics.py::test_s20",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "test_wage_growth_analytics.py::test_s21",
+      "setup": "",
+      "run": "pytest ./src/test_wage_growth_analytics.py::test_s21",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 10,
+      "points": 1
+    }
+  ]
+}
