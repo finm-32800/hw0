@@ -77,10 +77,7 @@ PIPELINE_THEME = config("PIPELINE_THEME", default="pipeline")
 ## Paths
 DATA_DIR = if_relative_make_abs(config('DATA_DIR', default=Path('_data'), cast=Path))
 _running_on_github = "actions-runner" in str(DATA_DIR)
-if _running_on_github:
-    MANUAL_DATA_DIR = DATA_DIR / "manual"
-else:
-    MANUAL_DATA_DIR = BASE_DIR / Path("data_manual")
+MANUAL_DATA_DIR = BASE_DIR / Path("data_manual")
 OUTPUT_DIR = if_relative_make_abs(config('OUTPUT_DIR', default=Path('_output'), cast=Path))
 PUBLISH_DIR = if_relative_make_abs(config('PUBLISH_DIR', default=Path('_output/publish'), cast=Path))
 # fmt: on
