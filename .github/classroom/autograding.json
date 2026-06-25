@@ -9,6 +9,36 @@
       "comparison": "exact",
       "timeout": 60,
       "points": 1
+    },
+    {
+      "name": "test_github_skills.py::test_introduction_to_github",
+      "setup": "",
+      "run": "pytest ./src/test_github_skills.py::test_introduction_to_github",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 60,
+      "points": 1
+    },
+    {
+      "name": "test_github_skills.py::test_communicate_using_markdown",
+      "setup": "",
+      "run": "pytest ./src/test_github_skills.py::test_communicate_using_markdown",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 60,
+      "points": 1
+    },
+    {
+      "name": "test_github_skills.py::test_github_pages",
+      "setup": "",
+      "run": "pytest ./src/test_github_skills.py::test_github_pages",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 60,
+      "points": 1
     }
   ]
 }
