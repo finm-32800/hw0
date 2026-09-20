@@ -6,6 +6,10 @@
 # Exclude _data folder, since it should all be pulled automatically (unless in the manual folder)
 /_data/*
 
+# The CRSP extract is licensed data, so it is shared privately and not committed.
+# See the README for where to download it.
+/data_manual/crsp_monthly_returns.csv
+
 # Exclude _output directory since it's should generated automatically
 /_output/*
 
