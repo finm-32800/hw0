@@ -1,16 +1,23 @@
-"""Pull monthly stock returns from CRSP (via WRDS) for a short list of large,
-well-known US stocks, along with the CRSP value-weighted market return and the
-one-month Treasury bill rate.
+"""Get monthly stock returns from CRSP for a short list of large, well-known US
+stocks, along with the CRSP value-weighted market return and the one-month
+Treasury bill rate.
 
-You do NOT need to run this file to complete HW 0. It requires a WRDS account,
-and yours may not be approved yet. The small extract that it produces is
-already saved in `data_manual/`, and the tests and the notebook read that file.
-The script is here so that you can see exactly where the data came from: in a
-reproducible analytical pipeline, every number traces back to code.
+There are two ways to get the data, and both save the same file,
+`_data/crsp_monthly_returns.csv`:
 
-Once your WRDS account is active, you can run it yourself:
+ - By default, download a cached copy of the extract. This needs no account,
+   so it works before your WRDS access is approved.
+ - With the environment variable `NO_CACHE=True`, pull the data fresh from
+   WRDS. This needs a WRDS account (put your `WRDS_USERNAME` in `.env`).
+
+Run it directly, or let `doit` run it for you:
 
     python ./src/pull_crsp.py
+    NO_CACHE=True python ./src/pull_crsp.py
+
+Either way, read the WRDS queries below. In a reproducible analytical
+pipeline, every number traces back to code, and this is the code that produced
+the cached copy.
 
 Notes on the CRSP tables used here (CRSP "CIZ" format, Flat File Format 2.0):
  - crspm.msf_v2: monthly stock file. `mthret` is the total monthly return,
@@ -23,14 +30,20 @@ Notes on the CRSP tables used here (CRSP "CIZ" format, Flat File Format 2.0):
  - ff.factors_monthly: Fama-French factors. `rf` is the one-month T-bill rate.
 """
 
+import urllib.request
+
 import pandas as pd
-import wrds
 
 import config
 
 DATA_DIR = config.DATA_DIR
-MANUAL_DATA_DIR = config.MANUAL_DATA_DIR
 WRDS_USERNAME = config.WRDS_USERNAME
+NO_CACHE = config.NO_CACHE
+
+EXTRACT_FILENAME = "crsp_monthly_returns.csv"
+CACHED_EXTRACT_URL = (
+    "https://drive.google.com/uc?export=download&id=149oTtKeAlHi_B41VLtlfBvFlZQUjdgnE"
+)
 
 START_DATE = "2000-01-01"
 END_DATE = "2024-12-31"
@@ -66,6 +79,8 @@ def pull_permnos(tickers=TICKERS, as_of=END_DATE, wrds_username=WRDS_USERNAME):
             AND usincflg = 'Y'
             AND issuertype IN ('ACOR', 'CORP')
     """
+    import wrds  # imported here so that the cached download needs no WRDS setup
+
     db = wrds.Connection(wrds_username=wrds_username)
     df = db.raw_sql(query)
     db.close()
@@ -83,6 +98,8 @@ def pull_monthly_returns(
         WHERE permno IN ({permno_list})
             AND mthcaldt BETWEEN '{start_date}' AND '{end_date}'
     """
+    import wrds
+
     db = wrds.Connection(wrds_username=wrds_username)
     df = db.raw_sql(query, date_cols=["mthcaldt"])
     db.close()
@@ -103,6 +120,8 @@ def pull_market_and_riskfree(
         FROM ff.factors_monthly
         WHERE date BETWEEN '{start_date}' AND '{end_date}'
     """
+    import wrds
+
     db = wrds.Connection(wrds_username=wrds_username)
     mkt = db.raw_sql(query_mkt, date_cols=["caldt"])
     rf = db.raw_sql(query_rf, date_cols=["date"])
@@ -128,20 +147,33 @@ def build_extract(permnos_df, returns_df, market_df):
     return extract.astype(float).round(6)
 
 
-def load_extract(data_dir=MANUAL_DATA_DIR):
-    path = data_dir / "crsp_monthly_returns.csv"
+def pull_extract_from_wrds():
+    """Build the extract from scratch with three WRDS queries."""
+    permnos_df = pull_permnos()
+    returns_df = pull_monthly_returns(permnos_df["permno"])
+    market_df = pull_market_and_riskfree()
+    return build_extract(permnos_df, returns_df, market_df)
+
+
+def download_cached_extract(url=CACHED_EXTRACT_URL):
+    """Download the cached copy of the extract."""
+    with urllib.request.urlopen(url) as response:
+        return pd.read_csv(response, parse_dates=["date"], index_col="date")
+
+
+def load_extract(data_dir=DATA_DIR):
+    path = data_dir / EXTRACT_FILENAME
     return pd.read_csv(path, parse_dates=["date"], index_col="date")
 
 
 if __name__ == "__main__":
-    permnos_df = pull_permnos()
-    returns_df = pull_monthly_returns(permnos_df["permno"])
-    market_df = pull_market_and_riskfree()
+    if NO_CACHE:
+        print("NO_CACHE=True: pulling from WRDS.")
+        extract = pull_extract_from_wrds()
+    else:
+        print("Downloading the cached extract. Set NO_CACHE=True to pull from WRDS.")
+        extract = download_cached_extract()
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    returns_df.to_parquet(DATA_DIR / "crsp_monthly_returns_long.parquet")
-
-    extract = build_extract(permnos_df, returns_df, market_df)
-    extract.to_csv(MANUAL_DATA_DIR / "crsp_monthly_returns.csv")
-    print(permnos_df.to_string(index=False))
+    extract.to_csv(DATA_DIR / EXTRACT_FILENAME)
     print(extract.describe().T[["count", "mean", "std"]])

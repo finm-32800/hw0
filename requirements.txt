@@ -6,6 +6,7 @@
 # the same software, which is the first step toward getting the same results.
 numpy==2.5.3
 pandas==2.2.3
+scipy==1.18.1
 matplotlib==3.11.2
 plotly==7.1.0
 streamlit==1.64.0

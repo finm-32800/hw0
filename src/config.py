@@ -68,6 +68,9 @@ def if_relative_make_abs(path):
 # fmt: off
 ## Other .env variables
 WRDS_USERNAME = config("WRDS_USERNAME", default="")
+# By default the data pull downloads a cached extract. Set NO_CACHE=True to
+# pull it fresh from WRDS instead (requires a WRDS account).
+NO_CACHE = config("NO_CACHE", default=False, cast=bool)
 START_DATE = config("START_DATE", default="1913-01-01", cast=to_datetime)
 END_DATE = config("END_DATE", default="2023-10-01", cast=to_datetime)
 USER = config("USER", default="")
