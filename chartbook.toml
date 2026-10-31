@@ -8,9 +8,7 @@ repo_url = "https://github.com/hw-finm-32800/hw0"
 readme = "./README.md"
 copyright = "2026"
 os_compatibility = ["Windows", "Linux", "macOS"]
-build = """
-doit
-"""
+requires_chartbook = ">=0.4.0"
 
 [notebooks]
 
@@ -29,3 +27,6 @@ path = "./_data/crsp_monthly_returns.csv"
 docs = "Monthly CRSP total returns for twelve large US stocks (AAPL through BA), the CRSP value-weighted market return (MKT), and the one-month T-bill rate from the Fama-French library (RF), from January 2000. One row per month."
 
 [charts]
+
+[scripts]
+build = "doit"

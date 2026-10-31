@@ -74,7 +74,7 @@ def task_generate_pipeline_site():
     """
     notebooks = ["01_markowitz", "02_markowitz_derivation"]
     return {
-        "actions": ["chartbook build -f"],
+        "actions": ["chartbook docs build -f"],
         "targets": ["docs/index.html"],
         "file_dep": [
             "chartbook.toml",

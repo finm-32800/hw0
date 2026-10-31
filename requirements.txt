@@ -13,7 +13,7 @@ streamlit==1.64.0
 pytest==9.1.1
 python-decouple==3.8
 doit==0.37.0
-chartbook==0.1.1
+chartbook>=0.4.0
 jupytext==1.19.5
 nbconvert==7.17.1
 ipykernel==7.3.0
